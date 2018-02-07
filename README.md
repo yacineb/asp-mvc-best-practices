@@ -51,6 +51,11 @@ Note : In some scenarios validation is complex and needs to be done in the backe
 
 It's better to pass view name to View method.
 
+### writer helpers/extensions for Html rendering
+
+There are some custom html rendering scenarios that can't be addressed by partial views.
+A good practice is to write extension method for HtmlHelper type , some examples:
+https://www.red-gate.com/simple-talk/dotnet/asp-net/writing-custom-html-helpers-for-asp-net-mvc/
 
 ### use POST/REDIRECT/GET pattern when submitting forms
 
