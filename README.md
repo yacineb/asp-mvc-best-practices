@@ -4,7 +4,9 @@ Best practices when designing an ASP .NET MVC application
 
 ### Avoid Duplication in Razor views
 
-Use view layouts and partial views adress this. Continuous refactoring of chtml file has to be done
+Use view layouts and partial views adress this. Continuous refactoring of chtml file has to be done.
+
+Implement helpers for reusable markup generation : using @helper directive inside Razor or by extending HtmlHelper (@Html object inside Razor views)
 
 ### Processing vs Formatting 
 
@@ -28,7 +30,7 @@ For applications with a large complex model, it's a good idea to create a separa
 For faster page loads:
 - Minify js & css and use Bundles:
 Details in (https://chsakell.com/2015/02/15/asp-net-mvc-solution-architecture-best-practices/)
-- Place all of your CSS in the HEAD element. place js elements right before the closing tag of the <body> element.
+- Place all of your CSS in the HEAD element. place js elements right before the closing tag of the '<body> element.
 
 ### Thin Controllers
 
@@ -37,6 +39,14 @@ Keep controller as thin as possible, and separate View-centric controller from A
 ### Avoid view-models boilerplate
 
 Keep in mind that ViewModels add an extra layer on Models. There should be a good reason to use them and when used they could add boilerplate code. If you end up with creating viewmodels, i'd recommend you to use this framework http://automapper.org/ for object-object mapping
+
+### Avoid parsing http stuff inside controllers
+
+For this you should implement and use custom model binding logic. Model binding is a powerful and customizable feature that eliminates the grind and toil of dealing with HTTP
+requests directly and lets us work with C# objects rather than dealing with Request.Form[] , Request.QueryString[] an even Session[].
+
+Its keep your code clean and testable as binding data is lower layer that should not interfer with business logic
+
 
 ### Validation through DataAnnotation
 
@@ -51,16 +61,19 @@ Note : In some scenarios validation is complex and needs to be done in the backe
 
 It's better to pass view name to View method.
 
-### writer helpers/extensions for Html rendering
-
-There are some custom html rendering scenarios that can't be addressed by partial views.
-A good practice is to write extension method for HtmlHelper type , some examples:
-https://www.red-gate.com/simple-talk/dotnet/asp-net/writing-custom-html-helpers-for-asp-net-mvc/
 
 ### use POST/REDIRECT/GET pattern when submitting forms
 
+According to the definition of the HTTP POST and GET verbs:
+
+HTTP GET is used for non-changing (idempotent) data to your model.
+HTTP POST is used for changing data to your model.
 
 
+### Use Filters for Cross-cutting concerns
+
+For concerns such as logging, authentication, profiling, exception handling etc.. you'd better use custom attributes and decorate your controllers and action using 
 
 ** for further reading ** 
 https://blogs.msdn.microsoft.com/aspnetue/2010/09/17/best-practices-for-asp-net-mvc/
+https://github.com/EduardoPires/EquinoxProject
